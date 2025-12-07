@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles del Producto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body { background:#f7f9fc; }
+        h1 { text-align:center; margin-top:30px; }
+        .card { padding:20px; border-radius:15px; }
+        .btn-custom { width:220px; margin:5px; }
+    </style>
+</head>
+
+<body>
+
+<div class="container mt-4">
+
+    <h1>Detalles del Producto</h1>
+
+    <div class="card shadow mt-4">
+
+        <p><strong>ID:</strong> <span th:text="${producto.id}"></span></p>
+        <p><strong>Nombre:</strong> <span th:text="${producto.nombre}"></span></p>
+        <p><strong>Precio:</strong> <span th:text="${producto.precio}"></span></p>
+        <p><strong>Stock:</strong> <span th:text="${producto.stock}"></span></p>
+        <p><strong>Marca:</strong> <span th:text="${producto.marca}"></span></p>
+
+        <hr>
+
+        <h4>Detalle del Producto</h4>
+
+        <div th:if="${detalle != null}">
+            <p><strong>Descripción larga:</strong> <span th:text="${detalle.descripcionLarga}"></span></p>
+            <p><strong>Material:</strong> <span th:text="${detalle.material}"></span></p>
+            <p><strong>Peso:</strong> <span th:text="${detalle.peso}"></span></p>
+
+            <a class="btn btn-warning btn-custom"
+               th:href="@{'/detalle/crear/' + ${producto.id}}">
+                ✏ Editar Detalle
+            </a>
+
+            <a class="btn btn-danger btn-custom"
+               th:href="@{'/detalle/eliminar/' + ${producto.id}}">
+                🗑 Eliminar Detalle
+            </a>
+        </div>
+
+        <div th:if="${detalle == null}">
+            <p>No hay detalle asignado.</p>
+
+            <a class="btn btn-primary btn-custom"
+               th:href="@{'/detalle/crear/' + ${producto.id}}">
+                ➕ Crear Detalle
+            </a>
+        </div>
+
+        <hr>
+
+
+        <h4>Categorías asignadas:</h4>
+
+        <ul>
+            <li th:each="c : ${producto.categorias}">
+                <span th:text="${c.nombre}"></span>
+
+                <a class="btn btn-danger btn-sm ms-2"
+                   th:href="@{'/producto-categorias/eliminar/' + ${producto.id} + '/' + ${c.id}}">
+                    Eliminar
+                </a>
+            </li>
+        </ul>
+
+        <div th:if="${producto.categorias.size() == 0}">
+            <p>No tiene categorías asignadas.</p>
+        </div>
+
+        <hr>
+
+        <div class="text-center">
+
+            <a class="btn btn-primary btn-custom"
+               th:href="@{'/categorias/crear?productoid=' + ${producto.id}}">
+                ➕ Crear nueva Categoría
+            </a>
+
+            <a class="btn btn-success btn-custom"
+               th:href="@{'/producto-categorias/asignar/' + ${producto.id}}">
+                Asignar Categoría existente
+            </a>
+
+            <a class="btn btn-info btn-custom"
+               th:href="@{'/resenas/listar/' + ${producto.id}}">
+                Ver Reseñas
+            </a>
+
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/productos" class="btn btn-secondary">⬅ Volver</a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

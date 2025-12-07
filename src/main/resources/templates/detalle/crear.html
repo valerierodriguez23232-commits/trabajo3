@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle del Producto</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body { background:#eef1f5; }
+        h1 { text-align:center; margin-top:30px; font-weight:bold; }
+        .card { border-radius:12px; padding:20px; }
+        .text-danger { font-size:14px; }
+    </style>
+</head>
+
+<body>
+
+<div class="container mt-4">
+
+    <h1>Detalle del Producto</h1>
+
+    <div class="card shadow">
+
+        <form th:action="@{/detalle/guardar}" th:object="${detalle}" method="post">
+
+            <input type="hidden" th:field="*{productoid}" th:value="${productoid}" />
+
+            <div class="mb-3">
+                <label class="form-label">Descripción Larga</label>
+                <textarea class="form-control" th:field="*{descripcionLarga}"></textarea>
+
+                <div class="text-danger"
+                     th:if="${#fields.hasErrors('descripcionLarga')}"
+                     th:errors="*{descripcionLarga}"></div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Material</label>
+                <input class="form-control" th:field="*{material}" />
+
+                <div class="text-danger"
+                     th:if="${#fields.hasErrors('material')}"
+                     th:errors="*{material}"></div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Peso</label>
+                <input class="form-control" th:field="*{peso}" />
+
+                <div class="text-danger"
+                     th:if="${#fields.hasErrors('peso')}"
+                     th:errors="*{peso}"></div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button class="btn btn-primary" type="submit">Guardar</button>
+                <a th:href="@{'/productos/detalles/' + ${productoid}}" class="btn btn-secondary">Cancelar</a>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>
